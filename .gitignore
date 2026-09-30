@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+
+# DuckDB database files
+*.duckdb
+
+# dbt internals
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
