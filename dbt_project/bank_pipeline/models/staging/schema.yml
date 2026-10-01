@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: "Cleaned and standardized transaction records, one row per transaction."
+    columns:
+      - name: transaction_id
+        description: "Unique identifier for each transaction."
+        tests:
+          - unique
+          - not_null
+
+      - name: account_id
+        description: "Identifier for the customer account."
+        tests:
+          - not_null
+
+      - name: transaction_amount
+        description: "Transaction amount in dollars."
+        tests:
+          - not_null
+
+      - name: transaction_type
+        description: "Whether the transaction was a debit or credit."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['debit', 'credit']
+
+      - name: channel
+        description: "Channel through which the transaction occurred."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['atm', 'online', 'branch']
+
+      - name: customer_age
+        description: "Age of the customer at time of transaction."
+        tests:
+          - not_null
