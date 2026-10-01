@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: int_customer_transaction_stats
+    description: "One row per customer (account_id), aggregating their full transaction history into summary statistics."
+    columns:
+      - name: account_id
+        description: "Unique identifier for the customer account."
+        tests:
+          - unique
+          - not_null
+
+      - name: total_transactions
+        description: "Total number of transactions made by this customer."
+        tests:
+          - not_null
+
+      - name: total_transaction_amount
+        description: "Sum of all transaction amounts for this customer."
+        tests:
+          - not_null
+          
