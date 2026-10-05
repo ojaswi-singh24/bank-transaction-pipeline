@@ -1,10 +1,9 @@
 -- int_customer_transaction_stats.sql
 -- Intermediate layer: aggregate transaction-level data up to one row per customer (account_id).
 -- This is reusable business logic that our final mart models will build on top of.
-
 with transactions as (
 
-    select * from main.stg_transactions
+    select * from {{ ref('stg_transactions') }}
 
 ),
 
