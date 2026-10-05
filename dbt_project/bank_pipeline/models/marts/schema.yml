@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Final customer dimension table: one row per customer with demographics and aggregated transaction behavior."
+    columns:
+      - name: account_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_category_summary
+    description: "Transaction volume and spending summarized by transaction_type and channel."
+    columns:
+      - name: transaction_type
+        tests:
+          - not_null
+      - name: channel
+        tests:
+          - not_null
