@@ -15,14 +15,16 @@ Raw transaction CSVs are rarely trustworthy or analysis-ready on their own. This
 
 ```mermaid
 flowchart LR
-    A[Raw CSV] -->|Python extract script| B[(DuckDB raw table)]
-    B -->|dbt staging| C[(stg_transactions)]
-    C -->|dbt intermediate| D[(int_customer_transaction_stats)]
-    D -->|dbt marts| E[(4 mart tables)]
-    E --> F[Streamlit Dashboard]
-    G[Prefect] -.orchestrates.-> A
-    G -.orchestrates.-> B
-    G -.orchestrates.-> C
+    A[Raw CSV] --> B[Python Extract Script]
+    B --> C[DuckDB Raw Table]
+    C --> D[dbt Staging]
+    D --> E[dbt Intermediate]
+    E --> F[dbt Marts]
+    F --> G[Streamlit Dashboard]
+    H[Prefect Orchestration] -.-> B
+    H -.-> D
+    H -.-> E
+    H -.-> F
 ```
 
 **The dbt layer follows a standard staging → intermediate → marts structure:**
@@ -52,20 +54,21 @@ Every model in the staging, intermediate, and marts layers has automated dbt tes
 
 ## Project structure
 
+```
 bank-transaction-pipeline/
-├── data/raw/ # Raw source CSV
+├── data/raw/                  # Raw source CSV
 ├── scripts/
-│ ├── extract_load.py # CSV -> DuckDB raw table
-│ └── pipeline_flow.py # Prefect orchestration flow
+│   ├── extract_load.py        # CSV -> DuckDB raw table
+│   └── pipeline_flow.py       # Prefect orchestration flow
 ├── dbt_project/bank_pipeline/
-│ └── models/
-│ ├── staging/ # stg_transactions
-│ ├── intermediate/ # int_customer_transaction_stats
-│ └── marts/ # dim_customers, fct_category_summary,
-│ # fct_monthly_trends, fct_spending_anomalies
+│   └── models/
+│       ├── staging/           # stg_transactions
+│       ├── intermediate/      # int_customer_transaction_stats
+│       └── marts/             # dim_customers, fct_category_summary,
+│                               # fct_monthly_trends, fct_spending_anomalies
 └── dashboard/
-└── app.py # Streamlit dashboard
-
+    └── app.py                 # Streamlit dashboard
+```
 
 ## Running it locally
 
