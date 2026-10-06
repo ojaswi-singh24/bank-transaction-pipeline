@@ -18,3 +18,11 @@ models:
       - name: channel
         tests:
           - not_null
+
+  - name: fct_spending_anomalies
+    description: "Transactions flagged as unusually large relative to that specific customer's own typical spending (z-score > 2)."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
